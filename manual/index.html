@@ -31,6 +31,7 @@
   --ambar-fondo: #FFF7ED; --ambar: #C2410C;
   --rojo-fondo: #FEF2F2; --rojo: #C10007;
   --sombra: 0 1px 2px rgb(14 14 15 / .06), 0 8px 24px rgb(14 14 15 / .06);
+  --marco: #0E0E0F;
   --degradado: linear-gradient(88.87deg, #DF5830 64.52%, #FFAE87 111.25%);
   --degradado-titulo: linear-gradient(90.96deg, #BC4925 26%, #FF8449 82.59%);
   --degradado-fondo: linear-gradient(180deg, #FFFFFF 4.9%, #FBE7D4 55%);
@@ -45,6 +46,7 @@
     --ambar-fondo: #2A1A0C; --ambar: #FDBA74;
     --rojo-fondo: #2A1212; --rojo: #FF8A8C;
     --sombra: 0 1px 2px rgb(0 0 0 / .4);
+    --marco: #3A3A3D;
     --degradado-fondo: linear-gradient(180deg, #0E0E0F 4.9%, #3B2614 55%);
     color-scheme: dark;
   }
@@ -57,6 +59,7 @@
   --ambar-fondo: #2A1A0C; --ambar: #FDBA74;
   --rojo-fondo: #2A1212; --rojo: #FF8A8C;
   --sombra: 0 1px 2px rgb(0 0 0 / .4);
+  --marco: #3A3A3D;
   --degradado-fondo: linear-gradient(180deg, #0E0E0F 4.9%, #3B2614 55%);
   color-scheme: dark;
 }
@@ -137,7 +140,7 @@ ul.lista li { margin-bottom: 6px; }
 figure.telefono { margin: 0; flex: 0 0 220px; scroll-snap-align: start; }
 figure.telefono img {
   width: 220px; aspect-ratio: 390 / 844; object-fit: cover; object-position: top;
-  border-radius: 30px; border: 6px solid var(--texto); background: var(--fondo-suave); box-shadow: var(--sombra);
+  border-radius: 30px; border: 6px solid var(--marco); background: var(--fondo-suave); box-shadow: var(--sombra);
 }
 figure.telefono figcaption { font-size: 14px; color: var(--texto-3); font-style: italic; margin-top: 10px; text-align: center; }
 
@@ -187,7 +190,7 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
 
 <header class="barra">
   <div class="envoltura">
-    <a class="marca" href="#inicio"><img src="img/icono.webp" alt="">Ginger <span>· Manual</span></a>
+    <a class="marca" href="#inicio"><img src="/manual/img/icono.webp" alt="">Ginger <span>· Manual</span></a>
     <span class="beta">Beta · noviembre 2026</span>
   </div>
 </header>
@@ -204,14 +207,14 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
           <li>🟢 Mejor opción, mixto o evitar</li>
           <li>🥜 Cuida tus alergias</li>
           <li>🫒 Aceites, frituras y azúcares</li>
-          <li>🇺🇸 English · 🇪🇸 Español</li>
+          <li>🌎 English y Español</li>
         </ul>
         <div class="botones">
           <a class="boton principal" href="#primeros-pasos">Empezar</a>
           <a class="boton secundario" href="#por-que">Por qué existe</a>
         </div>
       </div>
-      <img class="mascota" src="img/mascota.webp" alt="Ginger, la mascota: una raíz de jengibre sonriente">
+      <img class="mascota" src="/manual/img/mascota.webp" alt="Ginger, la mascota: una raíz de jengibre sonriente">
     </div>
   </div>
 
@@ -259,8 +262,8 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
         <li><strong>Continuar como invitado:</strong> para mirar la app sin crear cuenta. Puedes hacer el perfil, pero <strong>para escanear menús necesitas una cuenta</strong>.</li>
       </ol>
       <div class="telefonos">
-        <figure class="telefono"><img src="img/bienvenida.webp" alt="Pantalla de bienvenida de Ginger con la mascota" loading="lazy"><figcaption>La bienvenida</figcaption></figure>
-        <figure class="telefono"><img src="img/ingresar.webp" alt="Pantalla para continuar con email" loading="lazy"><figcaption>Continuar con email</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/bienvenida.webp" alt="Pantalla de bienvenida de Ginger con la mascota" loading="lazy"><figcaption>La bienvenida</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ingresar.webp" alt="Pantalla para continuar con email" loading="lazy"><figcaption>Continuar con email</figcaption></figure>
       </div>
       <div class="consejo"><p>En el campo del email aparece una <strong>cruz</strong> para borrarlo de un toque, y en la contraseña, un <strong>ojo</strong> para ver lo que escribiste.</p></div>
       <p>Los botones de <strong>Apple</strong> y <strong>Google</strong>, y <strong>Olvidé mi contraseña</strong>, ya están en la pantalla pero todavía dicen «Muy pronto».</p>
@@ -290,13 +293,13 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
         </tbody>
       </table>
       <div class="telefonos">
-        <figure class="telefono"><img src="img/ob-prioridades.webp" alt="Paso 1: qué es lo que más te importa" loading="lazy"><figcaption>Paso 1</figcaption></figure>
-        <figure class="telefono"><img src="img/ob-estilos.webp" alt="Paso 3: estilo de alimentación" loading="lazy"><figcaption>Paso 3: elige uno</figcaption></figure>
-        <figure class="telefono"><img src="img/ob-alergias.webp" alt="Paso 4: alergias" loading="lazy"><figcaption>Paso 4: alergias</figcaption></figure>
-        <figure class="telefono"><img src="img/ob-comparacion.webp" alt="Paso 5: otras apps contra Ginger" loading="lazy"><figcaption>Paso 5</figcaption></figure>
-        <figure class="telefono"><img src="img/ob-evitar.webp" alt="Paso 7: ingredientes a evitar" loading="lazy"><figcaption>Paso 7: tus gustos</figcaption></figure>
-        <figure class="telefono"><img src="img/ob-ubicacion.webp" alt="Paso 10: permiso de ubicación" loading="lazy"><figcaption>Paso 10</figcaption></figure>
-        <figure class="telefono"><img src="img/ob-avisos.webp" alt="Paso 11: antes de escanear" loading="lazy"><figcaption>Paso 11</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-prioridades.webp" alt="Paso 1: qué es lo que más te importa" loading="lazy"><figcaption>Paso 1</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-estilos.webp" alt="Paso 3: estilo de alimentación" loading="lazy"><figcaption>Paso 3: elige uno</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-alergias.webp" alt="Paso 4: alergias" loading="lazy"><figcaption>Paso 4: alergias</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-comparacion.webp" alt="Paso 5: otras apps contra Ginger" loading="lazy"><figcaption>Paso 5</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-evitar.webp" alt="Paso 7: ingredientes a evitar" loading="lazy"><figcaption>Paso 7: tus gustos</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-ubicacion.webp" alt="Paso 10: permiso de ubicación" loading="lazy"><figcaption>Paso 10</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/ob-avisos.webp" alt="Paso 11: antes de escanear" loading="lazy"><figcaption>Paso 11</figcaption></figure>
       </div>
       <div class="consejo"><p><strong>Alergias e ingredientes a evitar no son lo mismo.</strong> Una alergia manda el plato a «Evitar» siempre. Un ingrediente que no te gusta solo te avisa con «Ten en cuenta: contiene…», sin bajarle la nota.</p></div>
       <p>La <strong>cámara</strong> no se pide en el perfil: el teléfono te la pide la primera vez que escaneas.</p>
@@ -316,8 +319,8 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
         <li>Los platos <strong>van apareciendo a medida que se leen</strong>. Abajo de la lista dice «Leyendo más platos…» hasta que termina.</li>
       </ol>
       <div class="telefonos">
-        <figure class="telefono"><img src="img/escanear.webp" alt="Pantalla de escanear con el cuadro" loading="lazy"><figcaption>Toca el cuadro</figcaption></figure>
-        <figure class="telefono"><img src="img/escaneando.webp" alt="Ginger leyendo el menú" loading="lazy"><figcaption>Leyendo el menú…</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/escanear.webp" alt="Pantalla de escanear con el cuadro" loading="lazy"><figcaption>Toca el cuadro</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/escaneando.webp" alt="Ginger leyendo el menú" loading="lazy"><figcaption>Leyendo el menú…</figcaption></figure>
       </div>
       <ul class="lista">
         <li><strong>Flash</strong> (arriba a la izquierda): para restaurantes con poca luz.</li>
@@ -335,7 +338,7 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
       <h2>Leer los resultados</h2>
       <p>Arriba ves el nombre del restaurante (o «Tu menú», si no aparece en la foto) y cuántos platos encontró Ginger. Los platos vienen ordenados: <strong>primero los mejores</strong>, y el primero ya viene abierto.</p>
       <div class="telefonos">
-        <figure class="telefono"><img src="img/resultados.webp" alt="Resultados del menú con la mejor opción abierta" loading="lazy"><figcaption>La mejor opción, abierta</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/resultados.webp" alt="Resultados del menú con la mejor opción abierta" loading="lazy"><figcaption>La mejor opción, abierta</figcaption></figure>
       </div>
       <h3>Las tres etiquetas</h3>
       <table>
@@ -408,9 +411,9 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
       <h2>Más: preferencias e idioma</h2>
       <p>La última pestaña de la barra de abajo junta tu cuenta, tus objetivos, la ayuda y las redes.</p>
       <div class="telefonos">
-        <figure class="telefono"><img src="img/mas.webp" alt="Pantalla Más" loading="lazy"><figcaption>Más</figcaption></figure>
-        <figure class="telefono"><img src="img/preferencias.webp" alt="Preferencias: apariencia y avisos" loading="lazy"><figcaption>Preferencias</figcaption></figure>
-        <figure class="telefono"><img src="img/idioma.webp" alt="Elegir un idioma" loading="lazy"><figcaption>Idioma</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/mas.webp" alt="Pantalla Más" loading="lazy"><figcaption>Más</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/preferencias.webp" alt="Preferencias: apariencia y avisos" loading="lazy"><figcaption>Preferencias</figcaption></figure>
+        <figure class="telefono"><img src="/manual/img/idioma.webp" alt="Elegir un idioma" loading="lazy"><figcaption>Idioma</figcaption></figure>
       </div>
       <h3>Preferencias</h3>
       <ul class="lista">
@@ -475,7 +478,7 @@ footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
 
 <footer>
   <div class="envoltura">
-    <img src="img/mascota.webp" alt="">
+    <img src="/manual/img/mascota.webp" alt="">
     <p><strong>Ginger</strong> · Versión beta · noviembre 2026.<br>Las estimaciones son de IA y no reemplazan el consejo de un profesional de la salud.</p>
   </div>
 </footer>
