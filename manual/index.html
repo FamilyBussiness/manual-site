@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de Ginger</title>
+<meta name="description" content="Cómo usar Ginger: escanea el menú del restaurante y descubre qué platos van con tus objetivos, tus alergias y tu forma de comer.">
+<meta name="theme-color" content="#DF5830">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="Manual de Ginger">
+<meta property="og:description" content="Escanea el menú y descubre qué pedir. Todo lo que hace Ginger, paso a paso.">
+<meta property="og:image" content="/manual/img/icono.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fondo: #FFFFFF;
+  --fondo-suave: #F4F5F5;
+  --durazno: #FBE7D4;
+  --texto: #0E0E0F;
+  --texto-2: #48484A;
+  --texto-3: #8E8E93;
+  --borde: #E9E9EA;
+  --naranja: #DF5830;
+  --naranja-vivo: #FF6900;
+  --marron: #441306;
+  --etiqueta: #FFD6A7;
+  --verde-fondo: #F0FDF4; --verde: #15803D;
+  --ambar-fondo: #FFF7ED; --ambar: #C2410C;
+  --rojo-fondo: #FEF2F2; --rojo: #C10007;
+  --sombra: 0 1px 2px rgb(14 14 15 / .06), 0 8px 24px rgb(14 14 15 / .06);
+  --degradado: linear-gradient(88.87deg, #DF5830 64.52%, #FFAE87 111.25%);
+  --degradado-titulo: linear-gradient(90.96deg, #BC4925 26%, #FF8449 82.59%);
+  --degradado-fondo: linear-gradient(180deg, #FFFFFF 4.9%, #FBE7D4 55%);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fondo: #0E0E0F; --fondo-suave: #1A1A1C; --durazno: #3B2614;
+    --texto: #FFFFFF; --texto-2: #C7C7CC; --texto-3: #8E8E93; --borde: #2F2F31;
+    --marron: #FFAE87; --etiqueta: #441306;
+    --verde-fondo: #12261A; --verde: #4ADE80;
+    --ambar-fondo: #2A1A0C; --ambar: #FDBA74;
+    --rojo-fondo: #2A1212; --rojo: #FF8A8C;
+    --sombra: 0 1px 2px rgb(0 0 0 / .4);
+    --degradado-fondo: linear-gradient(180deg, #0E0E0F 4.9%, #3B2614 55%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fondo: #0E0E0F; --fondo-suave: #1A1A1C; --durazno: #3B2614;
+  --texto: #FFFFFF; --texto-2: #C7C7CC; --texto-3: #8E8E93; --borde: #2F2F31;
+  --marron: #FFAE87; --etiqueta: #441306;
+  --verde-fondo: #12261A; --verde: #4ADE80;
+  --ambar-fondo: #2A1A0C; --ambar: #FDBA74;
+  --rojo-fondo: #2A1212; --rojo: #FF8A8C;
+  --sombra: 0 1px 2px rgb(0 0 0 / .4);
+  --degradado-fondo: linear-gradient(180deg, #0E0E0F 4.9%, #3B2614 55%);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font: 400 17px/1.6 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--naranja); }
+.envoltura { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+
+/* Encabezado */
+.barra {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--fondo) 86%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--borde);
+}
+.barra .envoltura { display: flex; align-items: center; gap: 12px; height: 60px; }
+.marca { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--texto); font-weight: 700; font-size: 18px; }
+.marca img { width: 34px; height: 34px; border-radius: 9px; }
+.marca span { font-weight: 400; color: var(--texto-3); }
+.beta { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--marron); background: var(--etiqueta); padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+
+/* Portada */
+.portada { background: var(--degradado-fondo); padding: 56px 0 64px; }
+.portada .envoltura { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; }
+.saludo { font-weight: 600; margin: 0 0 8px; }
+h1 {
+  font-size: clamp(34px, 6vw, 52px); line-height: 1.08; letter-spacing: -.02em; font-weight: 600; margin: 0 0 18px;
+  background: var(--degradado-titulo); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.bajada { color: var(--texto-2); font-size: 19px; margin: 0 0 24px; max-width: 30ch; }
+.mascota { width: min(100%, 300px); margin: 0 auto; filter: drop-shadow(0 18px 30px rgb(68 19 6 / .18)); animation: flotar 5s ease-in-out infinite; }
+@keyframes flotar { 50% { transform: translateY(-10px) rotate(-2deg); } }
+@media (prefers-reduced-motion: reduce) { .mascota { animation: none; } html { scroll-behavior: auto; } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+.chips li { background: var(--fondo); border: 1px solid var(--borde); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 500; }
+.botones { display: flex; flex-wrap: wrap; gap: 12px; }
+.boton { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 26px; border-radius: 999px; font-weight: 600; text-decoration: none; }
+.boton.principal { background: var(--degradado); color: #fff; }
+.boton.secundario { background: var(--fondo); color: var(--texto); border: 1px solid var(--borde); }
+
+/* Índice */
+.indice { padding-top: 48px; padding-bottom: 8px; }
+.indice h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--texto-3); margin: 0 0 14px; }
+.indice ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.indice a { display: flex; gap: 12px; align-items: baseline; padding: 12px 14px; border-radius: 14px; background: var(--fondo-suave); color: var(--texto); text-decoration: none; font-weight: 500; }
+.indice a:hover { background: var(--durazno); }
+.indice a b { color: var(--naranja); font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* Capítulos */
+section.capitulo { padding: 56px 0 8px; border-top: 1px solid var(--borde); margin-top: 48px; }
+.numero { color: var(--naranja); font-weight: 600; font-size: 15px; letter-spacing: .04em; }
+h2 { font-size: clamp(26px, 4.4vw, 34px); line-height: 1.15; letter-spacing: -.015em; font-weight: 600; margin: 4px 0 16px; }
+h3 { font-size: 20px; font-weight: 600; margin: 32px 0 8px; }
+p { margin: 0 0 14px; }
+.capitulo > .envoltura > p, .capitulo li { color: var(--texto-2); }
+strong { color: var(--texto); font-weight: 600; }
+ol.pasos { counter-reset: paso; list-style: none; padding: 0; margin: 0 0 20px; }
+ol.pasos li { counter-increment: paso; position: relative; padding: 2px 0 12px 44px; }
+ol.pasos li::before {
+  content: counter(paso); position: absolute; left: 0; top: 0;
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--etiqueta); color: var(--marron); font-weight: 700; font-size: 14px;
+}
+ul.lista { padding-left: 20px; margin: 0 0 16px; }
+ul.lista li { margin-bottom: 6px; }
+
+/* Teléfonos */
+.telefonos { display: flex; gap: 20px; overflow-x: auto; padding: 12px 4px 20px; margin: 8px -4px 4px; scroll-snap-type: x mandatory; }
+figure.telefono { margin: 0; flex: 0 0 220px; scroll-snap-align: start; }
+figure.telefono img {
+  width: 220px; aspect-ratio: 390 / 844; object-fit: cover; object-position: top;
+  border-radius: 30px; border: 6px solid var(--texto); background: var(--fondo-suave); box-shadow: var(--sombra);
+}
+figure.telefono figcaption { font-size: 14px; color: var(--texto-3); font-style: italic; margin-top: 10px; text-align: center; }
+
+/* Recuadros */
+.consejo { display: flex; gap: 12px; background: var(--durazno); border-radius: 18px; padding: 16px 18px; margin: 18px 0; color: var(--texto); }
+.consejo::before { content: "💡"; font-size: 20px; line-height: 1.4; }
+.consejo p { margin: 0; color: var(--texto); }
+.aviso { background: var(--rojo-fondo); }
+.aviso::before { content: "⚠️"; }
+
+.tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
+.tarjeta { border: 1px solid var(--borde); border-radius: 20px; padding: 18px; background: var(--fondo); }
+.tarjeta .emoji { font-size: 26px; }
+.tarjeta h4 { margin: 8px 0 4px; font-size: 16px; }
+.tarjeta p { margin: 0; font-size: 15px; color: var(--texto-2); }
+
+.etiqueta { display: inline-block; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.e-mejor { background: var(--verde-fondo); color: var(--verde); }
+.e-mixto { background: var(--ambar-fondo); color: var(--ambar); }
+.e-evitar { background: var(--rojo-fondo); color: var(--rojo); }
+
+table { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 15px; }
+th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+th { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-3); font-weight: 600; }
+td:first-child { font-weight: 600; color: var(--texto); }
+td { color: var(--texto-2); }
+
+/* Pie */
+footer { margin-top: 72px; background: var(--fondo-suave); padding: 40px 0 48px; }
+footer .envoltura { display: flex; gap: 16px; align-items: center; }
+footer img { width: 64px; }
+footer p { margin: 0; color: var(--texto-2); font-size: 15px; }
+
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  .portada { padding: 32px 0 40px; }
+  .portada .envoltura { grid-template-columns: 1fr; }
+  .mascota { width: 170px; order: -1; }
+  .indice ol, .tarjetas { grid-template-columns: 1fr; }
+  figure.telefono, figure.telefono img { flex-basis: 190px; width: 190px; }
+  .marca span { display: none; }
+  table { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="envoltura">
+    <a class="marca" href="#inicio"><img src="img/icono.webp" alt="">Ginger <span>· Manual</span></a>
+    <span class="beta">Beta · noviembre 2026</span>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="portada">
+    <div class="envoltura">
+      <div>
+        <p class="saludo">¡Te damos la bienvenida a ginger!</p>
+        <h1>Come fuera con inteligencia y mantén baja la inflamación</h1>
+        <p class="bajada">Saca una foto del menú y Ginger te dice qué platos van con tus objetivos, tus alergias y tu forma de comer.</p>
+        <ul class="chips">
+          <li>📸 Escanea cualquier menú</li>
+          <li>🟢 Mejor opción, mixto o evitar</li>
+          <li>🥜 Cuida tus alergias</li>
+          <li>🫒 Aceites, frituras y azúcares</li>
+          <li>🇺🇸 English · 🇪🇸 Español</li>
+        </ul>
+        <div class="botones">
+          <a class="boton principal" href="#primeros-pasos">Empezar</a>
+          <a class="boton secundario" href="#por-que">Por qué existe</a>
+        </div>
+      </div>
+      <img class="mascota" src="img/mascota.webp" alt="Ginger, la mascota: una raíz de jengibre sonriente">
+    </div>
+  </div>
+
+  <nav class="indice envoltura" aria-label="Contenido">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#por-que"><b>00</b> Por qué existe Ginger</a></li>
+      <li><a href="#primeros-pasos"><b>01</b> Primeros pasos</a></li>
+      <li><a href="#perfil"><b>02</b> Tu perfil en 11 pasos</a></li>
+      <li><a href="#escanear"><b>03</b> Escanear un menú</a></li>
+      <li><a href="#resultados"><b>04</b> Leer los resultados</a></li>
+      <li><a href="#como-decide"><b>05</b> Cómo decide Ginger</a></li>
+      <li><a href="#errores"><b>06</b> Si algo sale mal</a></li>
+      <li><a href="#mas"><b>07</b> Más: preferencias e idioma</a></li>
+      <li><a href="#privacidad"><b>08</b> Tus datos</a></li>
+      <li><a href="#lo-que-viene"><b>09</b> Lo que viene</a></li>
+      <li><a href="#probar"><b>10</b> Cómo probarla (y qué mirar)</a></li>
+    </ol>
+  </nav>
+
+  <!-- 00 -->
+  <section class="capitulo" id="por-que">
+    <div class="envoltura">
+      <span class="numero">00</span>
+      <h2>Por qué existe Ginger</h2>
+      <p>Las reglas estrictas arruinan la experiencia de salir a comer. Las apps de siempre cuentan calorías y macros, pero no ven lo que pasa en la cocina: <strong>el aceite de la fritura, los azúcares escondidos en las salsas o los ultraprocesados</strong>. Y eso es lo que muchas veces está detrás de la pesadez, la hinchazón o el bajón después de comer.</p>
+      <p>Ginger mira el menú como lo miraría alguien que sabe de nutrición: de qué está hecho cada plato, cómo se cocina y qué tiene que ver contigo. No se trata de comer menos. Se trata de comer mejor.</p>
+      <div class="tarjetas">
+        <div class="tarjeta"><div class="emoji">🍳</div><h4>Cómo se cocina</h4><p>A la plancha, al vapor, frito o carbonizado: la cocción cambia todo.</p></div>
+        <div class="tarjeta"><div class="emoji">🫙</div><h4>Lo que no se ve</h4><p>Aceites de semillas, salsas dulces y aderezos industriales.</p></div>
+        <div class="tarjeta"><div class="emoji">🎯</div><h4>Hecho para ti</h4><p>Tus alergias, tu estilo de alimentación y lo que prefieres evitar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 -->
+  <section class="capitulo" id="primeros-pasos">
+    <div class="envoltura">
+      <span class="numero">01</span>
+      <h2>Primeros pasos</h2>
+      <p>Al abrir Ginger por primera vez ves la bienvenida, con la mascota. Desde ahí eliges cómo entrar:</p>
+      <ol class="pasos">
+        <li><strong>Continuar con email:</strong> escribe tu email y una contraseña. Si es tu primera vez, toca <strong>Registrarme</strong>; si ya tienes cuenta, <strong>Continuar</strong>. El botón se activa cuando el email está bien escrito.</li>
+        <li>Si al crear la cuenta te pedimos <strong>confirmar el email</strong>, abre el mensaje que te llega y vuelve a la app para iniciar sesión.</li>
+        <li><strong>Continuar como invitado:</strong> para mirar la app sin crear cuenta. Puedes hacer el perfil, pero <strong>para escanear menús necesitas una cuenta</strong>.</li>
+      </ol>
+      <div class="telefonos">
+        <figure class="telefono"><img src="img/bienvenida.webp" alt="Pantalla de bienvenida de Ginger con la mascota" loading="lazy"><figcaption>La bienvenida</figcaption></figure>
+        <figure class="telefono"><img src="img/ingresar.webp" alt="Pantalla para continuar con email" loading="lazy"><figcaption>Continuar con email</figcaption></figure>
+      </div>
+      <div class="consejo"><p>En el campo del email aparece una <strong>cruz</strong> para borrarlo de un toque, y en la contraseña, un <strong>ojo</strong> para ver lo que escribiste.</p></div>
+      <p>Los botones de <strong>Apple</strong> y <strong>Google</strong>, y <strong>Olvidé mi contraseña</strong>, ya están en la pantalla pero todavía dicen «Muy pronto».</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="capitulo" id="perfil">
+    <div class="envoltura">
+      <span class="numero">02</span>
+      <h2>Tu perfil en 11 pasos</h2>
+      <p>Antes del primer escaneo, Ginger te hace unas preguntas cortas. Con eso sabe qué es «bueno» para ti. La barra naranja de arriba muestra cuánto falta, y con la flecha vuelves al paso anterior.</p>
+      <table>
+        <thead><tr><th>Paso</th><th>Qué te pregunta o te cuenta</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Lo que más te importa</td><td>Evitar la pesadez, la hinchazón o los aceites de semillas, encontrar la mejor opción, priorizar la proteína. Eliges todas las que quieras.</td></tr>
+          <tr><td>2 · Nuestra idea</td><td>Por qué las reglas estrictas no sirven para salir a comer.</td></tr>
+          <tr><td>3 · Estilo de alimentación</td><td>Apto para GLP-1, alto en proteína, keto, bajo en carbohidratos, ninguna dieta en particular o alimentos naturales. <strong>Uno solo.</strong></td></tr>
+          <tr><td>4 · Alergias</td><td>Lácteos, huevo, pescado, maní y frutos secos, sésamo, mariscos, soya, trigo y gluten, o ninguna.</td></tr>
+          <tr><td>5 · Otras apps vs. Ginger</td><td>La diferencia entre contar calorías y mirar la calidad de los ingredientes.</td></tr>
+          <tr><td>6 · Qué esperas de Ginger</td><td>Escanear menús, cambios más sanos, ideas de comidas o hablar con un coach con IA.</td></tr>
+          <tr><td>7 · Ingredientes a evitar</td><td>Gustos, no alergias: proteínas, acompañamientos y verduras que prefieres no comer.</td></tr>
+          <tr><td>8 · Comer mejor</td><td>Una ensalada César crocante al lado de un sándwich de masa madre con aguacate y pollo.</td></tr>
+          <tr><td>9 · El estudio</td><td>Lo que encontró Harvard siguiendo a más de 210,000 adultos.</td></tr>
+          <tr><td>10 · Tu ubicación</td><td>Para cargar el menú del restaurante en el que estás. Al tocar Continuar, el teléfono te pide el permiso.</td></tr>
+          <tr><td>11 · Antes de escanear</td><td>Son estimaciones de IA, confirma siempre con el restaurante y no es consejo médico.</td></tr>
+        </tbody>
+      </table>
+      <div class="telefonos">
+        <figure class="telefono"><img src="img/ob-prioridades.webp" alt="Paso 1: qué es lo que más te importa" loading="lazy"><figcaption>Paso 1</figcaption></figure>
+        <figure class="telefono"><img src="img/ob-estilos.webp" alt="Paso 3: estilo de alimentación" loading="lazy"><figcaption>Paso 3: elige uno</figcaption></figure>
+        <figure class="telefono"><img src="img/ob-alergias.webp" alt="Paso 4: alergias" loading="lazy"><figcaption>Paso 4: alergias</figcaption></figure>
+        <figure class="telefono"><img src="img/ob-comparacion.webp" alt="Paso 5: otras apps contra Ginger" loading="lazy"><figcaption>Paso 5</figcaption></figure>
+        <figure class="telefono"><img src="img/ob-evitar.webp" alt="Paso 7: ingredientes a evitar" loading="lazy"><figcaption>Paso 7: tus gustos</figcaption></figure>
+        <figure class="telefono"><img src="img/ob-ubicacion.webp" alt="Paso 10: permiso de ubicación" loading="lazy"><figcaption>Paso 10</figcaption></figure>
+        <figure class="telefono"><img src="img/ob-avisos.webp" alt="Paso 11: antes de escanear" loading="lazy"><figcaption>Paso 11</figcaption></figure>
+      </div>
+      <div class="consejo"><p><strong>Alergias e ingredientes a evitar no son lo mismo.</strong> Una alergia manda el plato a «Evitar» siempre. Un ingrediente que no te gusta solo te avisa con «Ten en cuenta: contiene…», sin bajarle la nota.</p></div>
+      <p>La <strong>cámara</strong> no se pide en el perfil: el teléfono te la pide la primera vez que escaneas.</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="capitulo" id="escanear">
+    <div class="envoltura">
+      <span class="numero">03</span>
+      <h2>Escanear un menú</h2>
+      <p>Escanear es la pantalla principal: la del medio en la barra de abajo.</p>
+      <ol class="pasos">
+        <li>Apunta la cámara al menú y que entre completo en el cuadro.</li>
+        <li><strong>Toca el cuadro</strong> para sacar la foto. El teléfono vibra, el cuadro se pone verde y aparece «¡Listo! Ya puedes bajar el teléfono».</li>
+        <li>Mientras Ginger lee, ves frases como «Buscando tus alérgenos…» o «Separando lo bueno de lo frito…».</li>
+        <li>Los platos <strong>van apareciendo a medida que se leen</strong>. Abajo de la lista dice «Leyendo más platos…» hasta que termina.</li>
+      </ol>
+      <div class="telefonos">
+        <figure class="telefono"><img src="img/escanear.webp" alt="Pantalla de escanear con el cuadro" loading="lazy"><figcaption>Toca el cuadro</figcaption></figure>
+        <figure class="telefono"><img src="img/escaneando.webp" alt="Ginger leyendo el menú" loading="lazy"><figcaption>Leyendo el menú…</figcaption></figure>
+      </div>
+      <ul class="lista">
+        <li><strong>Flash</strong> (arriba a la izquierda): para restaurantes con poca luz.</li>
+        <li><strong>Elegir una foto</strong> (arriba a la derecha): si ya le sacaste una foto al menú, la eliges de la galería.</li>
+      </ul>
+      <div class="consejo"><p>Las mejores fotos: con buena luz, sin reflejos y con el menú completo. Si el menú tiene varias páginas, escanea una por vez.</p></div>
+      <p>Cada cuenta puede hacer <strong>hasta 30 escaneos por día</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="capitulo" id="resultados">
+    <div class="envoltura">
+      <span class="numero">04</span>
+      <h2>Leer los resultados</h2>
+      <p>Arriba ves el nombre del restaurante (o «Tu menú», si no aparece en la foto) y cuántos platos encontró Ginger. Los platos vienen ordenados: <strong>primero los mejores</strong>, y el primero ya viene abierto.</p>
+      <div class="telefonos">
+        <figure class="telefono"><img src="img/resultados.webp" alt="Resultados del menú con la mejor opción abierta" loading="lazy"><figcaption>La mejor opción, abierta</figcaption></figure>
+      </div>
+      <h3>Las tres etiquetas</h3>
+      <table>
+        <tbody>
+          <tr><td><span class="etiqueta e-mejor">Mejor opción</span></td><td>Va con tus objetivos. Buenas cocciones, buenos ingredientes y nada que choque con tu perfil.</td></tr>
+          <tr><td><span class="etiqueta e-mixto">Mixto</span></td><td>Tiene cosas buenas y cosas para mirar. Muchas veces se arregla con un cambio.</td></tr>
+          <tr><td><span class="etiqueta e-evitar">Evitar</span></td><td>No va contigo: tiene uno de tus alérgenos o suma demasiado de lo que inflama.</td></tr>
+        </tbody>
+      </table>
+      <h3>Dentro de cada plato</h3>
+      <p>Toca un plato para abrirlo o cerrarlo:</p>
+      <ul class="lista">
+        <li><strong>A favor:</strong> lo bueno del plato (fibra, grasas saludables, buena proteína).</li>
+        <li><strong>Ten en cuenta:</strong> lo que conviene mirar, y los ingredientes de tu lista para evitar.</li>
+        <li><strong>Cambio sugerido:</strong> cómo pedirlo para que te quede mejor, por ejemplo cambiar la base por verduras.</li>
+      </ul>
+      <div class="consejo aviso"><p>Si tienes alergias, <strong>confirma siempre con el restaurante</strong>. Ginger estima los ingredientes por la receta habitual, y cada cocina tiene la suya.</p></div>
+      <p>El botón <strong>Recomiéndame qué pedir</strong> todavía dice «Muy pronto».</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="capitulo" id="como-decide">
+    <div class="envoltura">
+      <span class="numero">05</span>
+      <h2>Cómo decide Ginger</h2>
+      <p>La IA lee la foto y describe cada plato: la proteína, cómo se cocina, la base, las salsas, la grasa, los acompañamientos y los alérgenos probables. <strong>La IA no pone la nota.</strong> La nota la calcula un motor con <strong>42 reglas de nutrición</strong> armadas por nuestro equipo, así el mismo plato da siempre el mismo resultado.</p>
+      <ol class="pasos">
+        <li>Cada parte del plato suma o resta. Por ejemplo, al vapor suma, frito resta, el salmón suma y los fiambres restan.</li>
+        <li>Con <strong>2 puntos o más</strong> es <span class="etiqueta e-mejor">Mejor opción</span>; con <strong>−2 o menos</strong>, <span class="etiqueta e-evitar">Evitar</span>; en el medio, <span class="etiqueta e-mixto">Mixto</span>.</li>
+        <li>Después vienen las reglas de seguridad, que mandan sobre la nota.</li>
+      </ol>
+      <h3>Reglas que mandan sobre la nota</h3>
+      <ul class="lista">
+        <li>Si el plato tiene <strong>uno de tus alérgenos</strong> o <strong>grasas trans</strong>, va a Evitar.</li>
+        <li>Si eres <strong>keto</strong> y el plato tiene una base con almidón (pan, arroz, pasta, papa), va a Evitar.</li>
+        <li>Si comes <strong>bajo en carbohidratos</strong>, un plato con base de almidón queda, como mucho, en Mixto.</li>
+        <li>Si el menú dice <strong>muy poco</strong> del plato, no puede ser Mejor opción.</li>
+        <li>Con <strong>GLP-1</strong>, las frituras restan un poco más.</li>
+      </ul>
+      <div class="consejo"><p>Cuanto más completo esté tu perfil, mejor elige Ginger por ti. Muy pronto vas a poder cambiarlo desde <strong>Más → Editar objetivos</strong>.</p></div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="capitulo" id="errores">
+    <div class="envoltura">
+      <span class="numero">06</span>
+      <h2>Si algo sale mal</h2>
+      <p>Cada problema tiene su mensaje y, casi siempre, un botón para resolverlo. <strong>Reintentar</strong> vuelve a leer la misma foto: no hace falta sacar otra.</p>
+      <table>
+        <thead><tr><th>Mensaje</th><th>Qué hacer</th></tr></thead>
+        <tbody>
+          <tr><td>No hay conexión</td><td>Revisa internet y toca <strong>Reintentar</strong>.</td></tr>
+          <tr><td>La IA no pudo leer el menú esta vez</td><td>Espera un momento y toca <strong>Reintentar</strong>.</td></tr>
+          <tr><td>No encontramos un menú en la foto</td><td>Saca otra con más luz y el menú completo en el cuadro.</td></tr>
+          <tr><td>No pudimos usar esa foto</td><td>Prueba con otra foto del menú.</td></tr>
+          <tr><td>Tu sesión venció</td><td>Toca <strong>Ingresar</strong> y vuelve a entrar.</td></tr>
+          <tr><td>Crea una cuenta para escanear menús</td><td>Estás como invitado: toca <strong>Crear cuenta</strong>.</td></tr>
+          <tr><td>Llegaste al límite de escaneos de hoy</td><td>Mañana puedes escanear de nuevo.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="capitulo" id="mas">
+    <div class="envoltura">
+      <span class="numero">07</span>
+      <h2>Más: preferencias e idioma</h2>
+      <p>La última pestaña de la barra de abajo junta tu cuenta, tus objetivos, la ayuda y las redes.</p>
+      <div class="telefonos">
+        <figure class="telefono"><img src="img/mas.webp" alt="Pantalla Más" loading="lazy"><figcaption>Más</figcaption></figure>
+        <figure class="telefono"><img src="img/preferencias.webp" alt="Preferencias: apariencia y avisos" loading="lazy"><figcaption>Preferencias</figcaption></figure>
+        <figure class="telefono"><img src="img/idioma.webp" alt="Elegir un idioma" loading="lazy"><figcaption>Idioma</figcaption></figure>
+      </div>
+      <h3>Preferencias</h3>
+      <ul class="lista">
+        <li><strong>Apariencia:</strong> Sistema (como tu teléfono), Clara u Oscura. Cambia al instante.</li>
+        <li><strong>Avisos:</strong> novedades de menús guardados, restaurantes cercanos y consejos de la app. Ya puedes elegirlos; las notificaciones llegan muy pronto.</li>
+      </ul>
+      <h3>Idioma</h3>
+      <p>English o Español. La app cambia en el momento y lo recuerda. Si no eliges ninguno, usa el idioma de tu teléfono.</p>
+      <h3>Cerrar sesión</h3>
+      <p>Al final de Más, en <strong>Acciones</strong>. Te lleva de vuelta a la bienvenida.</p>
+      <div class="consejo"><p>Las preferencias y el idioma se guardan en tu teléfono. Si entras desde otro, los eliges de nuevo.</p></div>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section class="capitulo" id="privacidad">
+    <div class="envoltura">
+      <span class="numero">08</span>
+      <h2>Tus datos</h2>
+      <div class="tarjetas">
+        <div class="tarjeta"><div class="emoji">📷</div><h4>La foto</h4><p>Se usa para leer el menú. Ginger no la guarda.</p></div>
+        <div class="tarjeta"><div class="emoji">🔒</div><h4>Tu perfil</h4><p>Alergias y gustos son datos de salud: se guardan en tu cuenta y nunca se usan para estadísticas.</p></div>
+        <div class="tarjeta"><div class="emoji">📊</div><h4>Estadísticas</h4><p>Solo cuántos escaneos hay, cuánto tardan y si fallan. Nada del menú ni de ti.</p></div>
+      </div>
+      <p>El resultado de cada escaneo queda en tu cuenta, para el futuro historial de menús.</p>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="capitulo" id="lo-que-viene">
+    <div class="envoltura">
+      <span class="numero">09</span>
+      <h2>Lo que viene</h2>
+      <div class="tarjetas">
+        <div class="tarjeta"><div class="emoji">📍</div><h4>Mapa</h4><p>Restaurantes cerca de ti y «¿Estás en…?» al abrir la app, con el menú ya cargado.</p></div>
+        <div class="tarjeta"><div class="emoji">✨</div><h4>Recomiéndame qué pedir</h4><p>Una sugerencia directa del menú que escaneaste.</p></div>
+        <div class="tarjeta"><div class="emoji">🕘</div><h4>Historial de menús</h4><p>Vuelve a ver lo que escaneaste antes.</p></div>
+        <div class="tarjeta"><div class="emoji">🎯</div><h4>Editar objetivos</h4><p>Cambia tus respuestas del perfil cuando quieras.</p></div>
+        <div class="tarjeta"><div class="emoji">🍎</div><h4>Apple y Google</h4><p>Entrar con un toque, y recuperar tu contraseña.</p></div>
+        <div class="tarjeta"><div class="emoji">🔔</div><h4>Notificaciones</h4><p>Los avisos que ya puedes elegir en Preferencias.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="capitulo" id="probar">
+    <div class="envoltura">
+      <span class="numero">10</span>
+      <h2>Cómo probarla (y qué mirar)</h2>
+      <p>Ginger está en beta. Lo que más nos ayuda:</p>
+      <ol class="pasos">
+        <li>Haz el perfil con tus respuestas reales, alergias incluidas.</li>
+        <li>Escanea menús de verdad, de distintos restaurantes: cadenas, bodegones, cartas con fotos y sin fotos.</li>
+        <li>Abre los platos y mira si la etiqueta te parece justa. ¿Pedirías la «Mejor opción»?</li>
+        <li>Fíjate cuánto tarda en aparecer el primer plato y si algún mensaje de error no se entiende.</li>
+        <li>Prueba Más: el modo oscuro y el cambio de idioma.</li>
+      </ol>
+      <div class="consejo"><p>Si un plato quedó mal clasificado, anota <strong>el nombre del plato, el restaurante y qué esperabas</strong>. Con eso ajustamos las reglas.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="envoltura">
+    <img src="img/mascota.webp" alt="">
+    <p><strong>Ginger</strong> · Versión beta · noviembre 2026.<br>Las estimaciones son de IA y no reemplazan el consejo de un profesional de la salud.</p>
+  </div>
+</footer>
+</body>
+</html>
